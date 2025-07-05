@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Emissions Data</title>
+
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #01082D;
+  margin: 0;
+  padding: 0;
+}
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 15px;
+      display: block;
+      color: #555;
+    }
+
+    select, input[type="number"], input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    select:focus, input:focus {
+      border-color: #8FB3E2;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background-color: #8FB3E2;
+      color: white;
+      border: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #8FB3E2;
+    }
+
+    .stats {
+      text-align: center;
+      margin-top: 30px;
+      color: #333;
+    }
+
+    .highlight {
+      font-weight: bold;
+      font-size: 20px;
+      color: #8FB3E2;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 15px;
+      }
+
+      button {
+        padding: 12px;
+      }
+    }
+
+    button.dashboard-button {
+  background-color: #01082D;
+}
+
+button.dashboard-button:hover {
+  background-color: #01082D;
+}
+
+
+  footer {
+     /* position: fixed;*/
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ddd;
+      background-color: #8FB3E2;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Full-width Header -->
+<header style="width: 100%; background-color: #31487A; padding: 20px 0; text-align: center; margin-bottom: 60px;">
+ <!--- <h1 style="margin: 0; color: #01082D; font-size: 28px;">Carbon Emission Logger</h1>-->
+</header>
+
+
+  <div class="container">
+    <!-- Activity Selection -->
+    <label for="activity">Select Activity:</label>
+    <select id="activity" onchange="updateQuantityUnit()">
+      <option value="meat consumption">Meat Consumption</option>
+      <option value="car travel">Car Travel</option>
+      <option value="electricity use">Electricity Use</option>
+      <option value="plastic use">Plastic Use</option>
+      <option value="shower time">Shower Time</option>
+      <option value="clothing purchases">Clothing Purchases</option>
+      <option value="streaming video">Streaming Video</option>
+      <option value="light usage">Light Usage</option>
+      <option value="other">Other (Custom Activity)</option>
+    </select>
+
+    <!-- Custom Activity Inputs -->
+    <div id="customActivityInputs" style="display: none;">
+      <label for="customActivityName">Enter Custom Activity Name:</label>
+      <input type="text" id="customActivityName" placeholder="Enter custom activity name" required>
+
+      <label for="category">Select Category for Custom Activity:</label>
+      <select id="category" required>
+        <option value="food">Food</option>
+        <option value="transport">Transport</option>
+        <option value="energy">Energy</option>
+        <option value="waste">Waste</option>
+        <option value="water">Water</option>
+        <option value="shopping">Shopping</option>
+        <option value="digital">Digital</option>
+        <option value="home">Home</option>
+      </select>
+    </div>
+
+    <!-- Quantity Input -->
+    <label for="quantity">Quantity (<span id="unitLabel">units</span>):</label>
+    <input type="number" id="quantity" placeholder="Enter quantity" min="1" required>
+
+    <!-- Submit Button -->
+    <button onclick="submitData()">Submit</button>
+    <button class="dashboard-button" onclick="window.location.href='index.html'">Go to Dashboard</button>
+
+    <!-- Live Stats -->
+    <div class="stats">
+      <p>Total Activities Added: <span class="highlight" id="activityCount">0</span></p>
+      <p>Total Emissions: <span class="highlight" id="totalEmissions">0</span> kg CO₂</p>
+    </div>
+  </div>
+
+
+
+<footer>
+  &copy; 2025 Carbon Tracker. All rights reserved.
+</footer>
+
+
+
+  <script src="input.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Carbon Emissions Dashboard</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #01082D;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      width: 100%;
+      background-color: #31487A;
+      padding: 20px 0;
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      color: #ffffff;
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding-bottom: 80px; /* space for fixed footer */
+    }
+
+    .dropdown-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    #totalEmissionsDisplay {
+      margin: 10px 0;
+      font-size: 18px;
+      color: #31487A;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chart-section {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+
+    canvas {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    footer {
+    
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      color: #666;
+      border-top: 1px solid #ddd;
+      background-color: #8FB3E2;
+      z-index: 1000;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Carbon Emissions Dashboard</h1>
+</header>
+
+<!-- BEGIN Styled Container -->
+<div class="container">
+
+  <div class="dropdown-container">
+    <label for="categoryFilter"><strong>View breakdown by category:</strong></label><br>
+    <select id="categoryFilter" onchange="updateCategoryBarChart(this.value)">
+      <option value="">-- Select a category --</option>
+    </select>
+  </div>
+
+  <div id="totalEmissionsDisplay">
+    Total Emissions: <span id="emissionsValue">0</span> kg CO₂
+  </div>
+
+  <div class="chart-section">
+    
+    <canvas id="myChart"></canvas>
+    <canvas id="myBarChart"></canvas>
+  </div>
+
+</div>
+<!-- END Styled Container -->
+
+<footer>
+  &copy; 2025 Carbon Tracker. All rights reserved.
+</footer>
+
+<script src="scripts.js"></script>
+</body>
+</html>
