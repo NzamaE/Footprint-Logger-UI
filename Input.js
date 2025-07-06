@@ -1,160 +1,143 @@
-// Define the units used for each tracked activity
-const actUnits = {
-  // Food-related
+
+// Units for each activity
+const activityUnits = {
   "meat consumption": "servings",
-  "dairy consumption": "servings",
-  "food waste": "servings",
-  "rice consumption": "servings",
-  "vegetable consumption": "servings",
+  "dairy consumption": "servings", 
+    "food waste": "servings", 
+    "rice consumption": "servings", 
+    "vegetable consumption": "servings",
 
-  // Transportation
   "car travel": "km",
-  "flights": "km",
-  "public transport": "km",
-  "motorbike travel": "km",
+  "flights": "km", 
+    "public transport": "km", 
+    "motorbike travel": "km",
 
-  // Energy usage
   "electricity use": "kWh",
-  "heating": "kWh",
-  "cooling": "kWh",
-  "natural gas": "kWh",
-  "water heating": "kWh",
+  "heating": "kWh", 
+    "cooling": "kWh", 
+    "natural gas": "kWh", 
+    "water heating": "kWh",
 
-  // Waste materials
   "plastic use": "kg",
   "paper use": "kg",
-  "landfill trash": "kg",
+    "landfill trash": "kg",
 
-  // Water and appliance use
   "shower time": "minutes",
-  "dishwasher use": "minutes",
+  "shower time": "minutes",
+    "dishwasher use": "minutes",
 
-  // Shopping habits
   "clothing purchases": "items",
   "electronics purchases": "items",
-  "fast fashion": "items",
+    "fast fashion": "items",
 
-  // Digital activities
+
   "streaming video": "hours",
   "social media use": "hours",
-  "cloud storage": "hours",
+    "cloud storage": "hours",
 
-  // Home devices
   "light usage": "hours",
   "appliance use": "hours",
-  "smart device standby": "hours"
+    "smart device standby": "hours"
 };
 
-// Track totals
-let totEmissions = 0;
-let totActivities = 0;
+let totalEmissions = 0;
+let totalActivities = 0;
 
-// Load stored activity data from localStorage when the page loads
+// Load from localStorage on page load
 window.onload = function () {
-  const savedActivities = JSON.parse(localStorage.getItem("activities")) || [];
-
-  savedActivities.forEach(entry => {
-    totEmissions += entry.emissions || 0; // Assumes each entry has an 'emissionActivities += 1;
+  const stored = JSON.parse(localStorage.getItem("activities")) || [];
+  stored.forEach(entry => {
+    totalEmissions += entry.emissions;
+    totalActivities += 1;
   });
-
-  updateStatsDisplay();
-  updateQuantityUnit(); // Set the unit label on page load
+  updateStats();
+  updateQuantityUnit(); // on initial load
 };
 
-// Map activity names to broader categories
+
 function getActivityCategory(activity) {
-  const categoryMap = {
-    food: [
-      "meat consumption", "dairy consumption", "food waste", "rice consumption", "vegetable consumption"
-    ],
-    transport: [
-      "car travel", "flights", "public transport", "motorbike travel"
-    ],
-    energy: [
-      "electricity use", "heating", "cooling", "natural gas", "water heating"
-    ],
-    waste: [
-      "plastic use", "paper use", "landfill trash"
-    ],
-    water: [
-      "shower time", "dishwasher use"
-    ],
-    shopping: [
-      "clothing purchases", "electronics purchases", "fast fashion"
-    ],
-    digital: [
-      "streaming video", "social media use", "cloud storage"
-    ],
-    home: [
-      "light usage", "appliance use", "smart device standby"
-    ]
+  const categories = {
+    food: ["meat consumption"],
+    transport: ["car travel"],
+    energy: ["electricity use"],
+    waste: ["plastic use"],
+    water: ["shower time"],
+    shopping: ["clothing purchases"],
+    digital: ["streaming video"],
+    home: ["light usage"]
   };
 
-  for (let category in categoryMap) {
-    if (categoryMap[category].includes(activity)) {
-      return category;
-    }
+  for (let cat in categories) {
+    if (categories[cat].includes(activity)) return cat;
   }
   return "other";
 }
 
-// Show or hide custom activity inputs and update the unit label
+
+// Show/hide custom fields based on selection
 function updateQuantityUnit() {
-  const selectedActivity = document.getElementById("activity").value;
+  const activity = document.getElementById("activity").value;
   const unitLabel = document.getElementById("unitLabel");
   const customInputs = document.getElementById("customActivityInputs");
 
-  if (selectedActivity === "other") {
+  if (activity === "other") {
     customInputs.style.display = "block";
     unitLabel.textContent = "units";
   } else {
     customInputs.style.display = "none";
-    unitLabel.textContent = actUnits[selectedActivity] || "units";
+    unitLabel.textContent = activityUnits[activity] || "units";
   }
 }
 
-// Handle form submission and save activity
 function submitData() {
-  const selectedActivity = document.getElementById("activity").value;
+  const activitySelect = document.getElementById("activity").value;
   const quantity = parseFloat(document.getElementById("quantity").value);
+  if (isNaN(quantity) || quantity <= 0) return;
 
-  if (isNaN(quantity) || quantity <= 0) return; // Invalid input
-
-  let activityName = selectedActivity;
+  let activityName = activitySelect;
   let category = null;
 
-  if (selectedActivity === "other") {
+  if (activitySelect === "other") {
     activityName = document.getElementById("customActivityName").value.trim();
     category = document.getElementById("category").value;
-
-    if (!activityName || !category) return; // Missing custom info
+    if (!activityName || !category) return;
   } else {
     category = getActivityCategory(activityName);
   }
 
-  const newActivity = {
+  const activityData = {
     activity: activityName,
     category: category,
     quantity: quantity,
-    emissions: 0 // Default for now — can be calculated later
+    emissions: 0 // Optional placeholder — you can calculate real emissions later
   };
 
-  // Save to localStorage
-  const allActivities = JSON.parse(localStorage.getItem("activities")) || [];
-  allActivities.push(newActivity);
-  localStorage.setItem("activities", JSON.stringify(allActivities));
+  // Update running totals immediately
+  totalActivities += 1;
+  totalEmissions += activityData.emissions || 0;
 
-  // Clear form fields
+  // Save to localStorage
+  const activities = JSON.parse(localStorage.getItem("activities")) || [];
+  activities.push(activityData);
+  localStorage.setItem("activities", JSON.stringify(activities));
+
+  // Reset input
   document.getElementById("quantity").value = "";
-  if (selectedActivity === "other") {
+  if (activitySelect === "other") {
     document.getElementById("customActivityName").value = "";
   }
 
-  console.log("Stored activities:", allActivities);
+  // Update stats display immediately
+  updateStats();
+
+  console.log("Stored activities:", activities);
 }
 
-// Display stats like total count and emissions
-function updateStatsDisplay() {
-  document.getElementById("activityCount").texActivities;
-  document.getElementById("totEmissions").textContent = totEmissions.toFixed(2);
+
+// Update stats on page
+function updateStats() {
+  document.getElementById("activityCount").textContent = totalActivities;
+  document.getElementById("totalEmissions").textContent = totalEmissions.toFixed(2);
 }
+
+
