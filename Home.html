@@ -125,17 +125,55 @@ button.dashboard-button:hover {
   <div class="container">
     <!-- Activity Selection -->
     <label for="activity">Select Activity:</label>
-    <select id="activity" onchange="updateQuantityUnit()">
-      <option value="meat consumption">Meat Consumption</option>
-      <option value="car travel">Car Travel</option>
-      <option value="electricity use">Electricity Use</option>
-      <option value="plastic use">Plastic Use</option>
-      <option value="shower time">Shower Time</option>
-      <option value="clothing purchases">Clothing Purchases</option>
-      <option value="streaming video">Streaming Video</option>
-      <option value="light usage">Light Usage</option>
-      <option value="other">Other (Custom Activity)</option>
-    </select>
+   <select id="activity" onchange="updateQuantityUnit()">
+  <!-- Food -->
+  <option value="meat consumption">Meat Consumption</option>
+  <option value="dairy consumption">Dairy Consumption</option>
+  <option value="food waste">Food Waste</option>
+  <option value="rice consumption">Rice Consumption</option>
+  <option value="vegetable consumption">Vegetable Consumption</option>
+
+  <!-- Transport -->
+  <option value="car travel">Car Travel</option>
+  <option value="flights">Flights</option>
+  <option value="public transport">Public Transport</option>
+  <option value="motorbike travel">Motorbike Travel</option>
+
+  <!-- Energy -->
+  <option value="electricity use">Electricity Use</option>
+  <option value="heating">Heating</option>
+  <option value="cooling">Cooling</option>
+  <option value="natural gas">Natural Gas</option>
+  <option value="water heating">Water Heating</option>
+
+  <!-- Waste -->
+  <option value="plastic use">Plastic Use</option>
+  <option value="paper use">Paper Use</option>
+  <option value="landfill trash">Landfill Trash</option>
+
+  <!-- Water & Appliances -->
+  <option value="shower time">Shower Time</option>
+  <option value="dishwasher use">Dishwasher Use</option>
+
+  <!-- Purchases -->
+  <option value="clothing purchases">Clothing Purchases</option>
+  <option value="electronics purchases">Electronics Purchases</option>
+  <option value="fast fashion">Fast Fashion</option>
+
+  <!-- Digital -->
+  <option value="streaming video">Streaming Video</option>
+  <option value="social media use">Social Media Use</option>
+  <option value="cloud storage">Cloud Storage</option>
+
+  <!-- Devices -->
+  <option value="light usage">Light Usage</option>
+  <option value="appliance use">Appliance Use</option>
+  <option value="smart device standby">Smart Device Standby</option>
+
+  <!-- Other -->
+  <option value="other">Other (Custom Activity)</option>
+</select>
+
 
     <!-- Custom Activity Inputs -->
     <div id="customActivityInputs" style="display: none;">
